@@ -8,11 +8,11 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 <img src="https://github.com/user-attachments/assets/b6920c17-2da4-4c3f-8efc-b94893955e04" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/b6920c17-2da4-4c3f-8efc-b94893955e04" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/b6920c17-2da4-4c3f-8efc-b94893955e04" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/b6920c17-2da4-4c3f-8efc-b94893955e04" alt="Cornstarch <3" width="55" height="49">
 
 
-**The Breakdown:**
+### **The Breakdown:**
 
   The Program Starts By Initially Needing 2 Things To Be Done. 
 
-  This Is To Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With. As Well As Establishing An API Key In Which You Are Using To Communicate With _openai_ With.
+  1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With. As Well As Establishing An API Key In Which You Are Using To Communicate With _openai_ With.
   After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
   When The Process Starts It Will Initially Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Paralell Instead Of Sequentially As We Gain:
   ```
