@@ -13,6 +13,23 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
   #### **- Config Beforehand**
   The Program Starts By Initially Needing 2 Things To Be Done. 
 
+```
+
+33  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+34  
+35  
+36  # Initialize The OpenAI Client With Your Specific API Key
+37  openai.api_key = "________"
+38  
+39  # Specify The Directory Path Of Your PDFs
+40  directory_path = r"C:\Users\bensp\Downloads\demo"
+41  
+42  
+43  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+```
+
   1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
   2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
   
