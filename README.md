@@ -119,9 +119,10 @@ Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progr
 
 **Features:**
 
-  **Result After Parsing:**
+  ### **Script Parsing And Training PDF Data:**
   
-  ![image](https://github.com/user-attachments/assets/5582883a-eac1-4cae-bae1-d388cef04758)
+  ![2024-09-1300-32-48-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/d6577304-86de-41bd-a678-537d10918f6a)
+
 
 
 <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59">
