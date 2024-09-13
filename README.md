@@ -30,9 +30,9 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 ```
 
-  1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
+    1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
   
-  2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
+    2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
   
   After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
 
