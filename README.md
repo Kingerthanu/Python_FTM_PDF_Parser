@@ -95,10 +95,6 @@ After Extracting The Raw Responses From OpenAI, The Program Generates Summaries 
 #### **- Generating JSON Files For Training**
 Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset. These Files Serve As The Core Training Material For Fine-Tuning The AI Model On Specific Tasks Related To Arduino Mega 2560 Rev3 Integration, Covering Both Hardware And Software Perspectives.
 
-#### **- Handling Multiple PDFs**
-The Entire Pipeline Is Designed To Handle Multiple PDF Documents Concurrently. The `multiThreaded_process_directory(...)` Function Manages The Parallel Execution Of The PDF Processing Tasks, Utilizing Worker Threads To Ensure That Each Document Is Processed Independently. This Significantly Reduces Overall Processing Time, Particularly When Dealing With Large Datasets.  
-The Program's Use Of Structured Logging Through The `ProgressLogger` Ensures That Users Are Constantly Informed About The Processing Status. The Logs Are Synchronized Across Multiple Threads To Avoid Race Conditions, Ensuring That Log Messages Are Printed In A Coherent, Non-Overlapping Manner.
-
 Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progress Bar And Log Information Indicating Completion. This Pipeline Ensures That Fine-Tuned Models Receive Well-Organized And Contextualized Data For High-Quality Training Outcomes.
 
 
