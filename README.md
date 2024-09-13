@@ -119,7 +119,7 @@ Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progr
 
 ### **Features:**
 
-  ### **Script Parsing And Training PDF Data:**
+  **Script Parsing And Training PDF Data:**
   
   ![2024-09-1300-32-48-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/d6577304-86de-41bd-a678-537d10918f6a)
 
