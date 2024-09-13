@@ -5,7 +5,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting Sometimes So Will Need To Look Into It In The Future. OCR And Blip Were Being Attempted But Never Gave Consistent Results With The Warzone That PDFs Are So Are Currently Deprecated (Still Have Blip Saying Something But Is Really Useless, OCR Needed Gaussian Blur And Never Gave Consistent Results).
 
-Also BTW The Debug Messages Will Stay And Keep Adding Up So Make Sure It Doesn't Take Up Too Much Of Your Storage As I Kept It Quite Thorough As A Lot Is Said In The Debug File That Isn't Said Through The Terminal.
+**Also BTW The Debug Messages Will Stay And Keep Adding Up So Make Sure It Doesn't Take Up Too Much Of Your Storage As I Kept It Quite Thorough As A Lot Is Said In The Debug File That Isn't Said Through The Terminal.**
 
 ----------------------------------------------
 
