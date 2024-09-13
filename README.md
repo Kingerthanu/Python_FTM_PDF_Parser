@@ -153,6 +153,9 @@ Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progr
 
  <img width="1768" alt="image" src="https://github.com/user-attachments/assets/61479c16-fa29-4fc9-94c6-fbf885a73a4e">
 
+  **Screenshot Of Console UI (With A Bit Of Sharpie:**
+
+  <img width="1847" alt="image" src="https://github.com/user-attachments/assets/9552d56e-3dcf-41f5-bef2-acc4c51b8105">
 
 
 <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/b568a6eb-aa1d-4379-80a8-938dd51fa068" alt="Cornstarch <3" width="65" height="59">
