@@ -36,9 +36,6 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 ```
 
-  
-  
-  After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
 
   #### **- Parallel PDF Processing**
   When The Process Starts, It Will Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Parallel Instead Of Sequentially. Let `X1, X2, ..., Xn` Represent The Time It Takes To Process Each PDF. The Time Complexity For Sequential Execution Is:
