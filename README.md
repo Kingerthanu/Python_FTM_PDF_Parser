@@ -87,13 +87,25 @@ After The Raw Content From The PDF Has Been Extracted And Organized, The Text Cl
 Once The Text Is Cleaned, It Is Ready To Be Sent To OpenAI's GPT-Based Models For Further Fine-Tuning. To Avoid Exceeding The Token Limit Imposed By The API, The Function `chunk_text(...)` Splits The Cleaned Text Into Smaller, Manageable Chunks. This Step Is Crucial, Especially For Large Documents, As It Ensures That No Data Is Lost While Maintaining A Seamless Integration With The Language Model.
 
 #### **- Sending Data To OpenAI For Processing**
-Each Text Chunk Is Processed Using The `send_to_openai_with_retry(...)` Function. This Function Handles Communication With The OpenAI API, Ensuring That Each Text Chunk Is Passed Along With Any Relevant Context From Previous Pages. If An API Request Fails, A Retry Mechanism Is In Place To Ensure Reliability During Network Instability Or Other Transient Failures. The Model's Response Is Then Cleaned Up To Remove Any Unnecessary Artifacts, Preparing It For Use In Training Datasets.
+Each Text Chunk Is Processed Using The `send_to_openai_with_retry(...)` Function. This Function Handles Communication With The OpenAI API, Ensuring That Each Text Chunk Is Passed Along With Any Relevant Context From Previous Pages. If An API Request Fails, A Retry Mechanism Is In Place To Ensure Reliability During Network Instability Or Other Transient Failures. The Model's Response Is Then Cleaned Up To Remove Any Unnecessary Artifacts, Preparing It For Use In Training Datasets. When Providing Out Prompt We Follow The openai Standard For Their .jsonl Files With:
+  ```
+  
+  {{
+    "messages": [
+        {{"role": "system", "content": "AI's Tone/Expertise"}},
+        {{"role": "user", "content": "(Question About Training Data Contents)"}},
+        {{"role": "assistant", "content": "(Response To Question, Showing Diagrams, Code, Etc..)"}}
+    ]
+  }}
+  
+  
+  ```
 
 #### **- Fine-Tuning Contextualization**
 After Extracting The Raw Responses From OpenAI, The Program Generates Summaries Using `summarize_text(...)`. These Summaries Provide A Condensed Form Of The Extracted Text, Reducing Token Usage While Retaining Key Contextual Details From The Document. These Summaries Are Stored And Used As Context When Processing Subsequent Pages, Allowing The Model To Maintain A Coherent Understanding Of The Document As A Whole.
 
 #### **- Generating JSON Files For Training**
-Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset. These Files Serve As The Core Training Material For Fine-Tuning The AI Model On Specific Tasks Related To Arduino Mega 2560 Rev3 Integration, Covering Both Hardware And Software Perspectives.
+Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset. 
 
 Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progress Bar And Log Information Indicating Completion. This Pipeline Ensures That Fine-Tuned Models Receive Well-Organized And Contextualized Data For High-Quality Training Outcomes.
 
