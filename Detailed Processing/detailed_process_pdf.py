@@ -34,10 +34,10 @@ model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-capt
 
 
 # Initialize The OpenAI Client With Your Specific API Key
-openai.api_key = "________"
+openai.api_key = "______"
 
 # Specify The Directory Path Of Your PDFs
-directory_path = r"_______"
+directory_path = r"______"
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -96,9 +96,12 @@ class ProgressLogger:
       timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
       # Format The Log Message With A Timestamp And Log Level
       formatted_message = f"{timestamp} [{level}] - {message}"
-      # Append The Formatted Message To The Log Buffer
-      self.logs.append(formatted_message)
-      self.flush_logs()
+      
+      # Simply Print To Console Through Progress Bar Synchronization
+      self.progress.console.print(formatted_message)
+        # Append The Formatted Message To The Log Buffer
+        # self.logs.append(formatted_message)
+        # self.flush_logs()
       # Write The Log To A Debug File
       self.write_to_debug_file(formatted_message)
 
@@ -143,10 +146,10 @@ class ProgressLogger:
     
   '''
   def update_progress(self, task_id : str, advance : int = 1, description : str = None) -> None:
-    '''Updates The Progress Bar And Ensures Logs Are Flushed Before The Update.'''
     with self.lock:
-      # Flush Logs Before Updating Progress To Maintain Output Order
-      self.flush_logs()
+      # Don't Need To Flush Anymore By Printing Through self.progress.console.print(...)
+        # Flush Logs Before Updating Progress To Maintain Output Order
+        # self.flush_logs()
       # Update The Progress With An Optional Description
       if description:
         self.progress.update(task_id, advance=advance, description=description)
@@ -159,12 +162,14 @@ class ProgressLogger:
   Desc: Used To Save Away Logging Information In A File For Easy Access Later.
   Currently Being Employed To Silently Print Parsing Results To See Actually What The Parser Is Getting Out Of Our PDFs.
   
+  Preconditions:
+    1.) Will Append Message Contents In File; This Can Cause Build-Up Of Log Data If Not Cleared
+
   Postconditions:
     1.) Will Write message's Contents To self.debug_file With A New Line At The End
     
   '''
   def write_to_debug_file(self, message : str) -> None:
-    '''Writes The Given Log Message To The Debug Log File.'''
     with open(self.debug_file, 'a', encoding='utf-8') as f:
       f.write(message + '\n')
 
@@ -173,6 +178,8 @@ class ProgressLogger:
 '''
 
   Desc: Calls BLIP-2 In Order To Use Its Multi-Modal Fine-Tuned Model To Caption/Describe An Image.
+  Probably Will Soon Be Deprecated As Isn't Really That Good At Thorough Descriptions. Will Probs Use
+  LLaVa In Place.
   
   Preconditions:
     1.) image Must Be A Valid PIL Image Object.
@@ -294,10 +301,14 @@ def extract_content_with_mupdf(file_path : str, logger : ProgressLogger) -> str:
       # Perform BLIP-2 Image Analysis And Log The Caption
       logger.log(f"Using BLIP-2 to analyze image on page {page_num + 1} of {file_path}...")
       blip_caption = analyze_image_with_blip2(image)
+      if blip_caption != "":
+        logger.log(f"Blip-2 gained a caption.")
+      else:
+        logger.log(f"Failed gaining Blip-2 caption.")
       logger.write_to_debug_file(f"BLIP-2 Caption: {blip_caption}")
 
       # Perform OCR On The Image And Log The Extracted Text
-      logger.log(f"Using Tesseract OCR to process image on page {page_num + 1} of {file_path}...")
+      # logger.log(f"Using Tesseract OCR to process image on page {page_num + 1} of {file_path}...")
       # OCR Kinda Sucks For General Purpose.. ocr_text = extract_text_from_image(image)
       # OCR Kinda Sucks For General Purpose.. logger.write_to_debug_file(f"OCR extracted text: {ocr_text}")
 
@@ -308,13 +319,16 @@ def extract_content_with_mupdf(file_path : str, logger : ProgressLogger) -> str:
     # Extract Table Data From The Page
     logger.log(f"Attempting table extraction with Tabula on page {page_num + 1} of {file_path}...")
     table_data = extract_table_data_with_tabula_multiprocessing(file_path, page_num + 1)
-    logger.write_to_debug_file(f"Extracted table data: {table_data}")
+    if table_data != "":
+      logger.log(f"Successfully extracted table data.")
+    else:
+      logger.log(f"Failed extracting table data.")
 
     # Append The Extracted Data To The List Of Pages
     if text or blip_caption or table_data:
       pages.append({
         "page_num": page_num,
-        "text": text + " " + " " + blip_caption + " " + table_data,
+        "text": text + "  " + blip_caption + "  " + table_data,
         "images": images,
         "metadata": doc.metadata,
         "annotations": list(page.annots()) if page.annots() else [],
@@ -330,17 +344,16 @@ def extract_content_with_mupdf(file_path : str, logger : ProgressLogger) -> str:
 
 '''
 
-  Desc: Cleans Up The Extracted Text By Removing Headers, Footers, And Extra Whitespace Through Regular Expressions.
+  Desc: Cleans Up The Extracted Text By Removing Extra Whitespace Through Regular Expressions.
   
   Preconditions:
     1.) text Is A String Containing The Extracted PDF Text.
   
   Postconditions:
-    1.) Returns A Cleaned String With Page Numbers And Excessive Whitespace Removed.
+    1.) Returns A Cleaned String With Excessive Whitespace Removed.
 
 '''
 def preprocess_text(text):
-  text = re.sub(r'\bPage \d+\b', '', text)  # Remove Page Numbers
   text = re.sub(r'\s+', ' ', text)  # Normalize Excessive Whitespace
   return text.strip()
 
@@ -434,7 +447,6 @@ def send_to_openai_with_retry(text_chunk : str, previous_context : str = "", fil
 
 '''
 def send_to_openai(text_chunk, previous_context="", file_path="", page_num=""):
-  '''Sends a text chunk along with previous context to OpenAI GPT-4 to generate fine-tuning data.'''
   try:
     prompt = f"""
     Using the provided TEXT CONTENT from page {page_num} of {file_path} and PRIOR CONTEXT, generate **fine-tuning data** that breaks down the integration of hardware and software for the Arduino Mega 2560 Rev3 Board.
@@ -486,13 +498,13 @@ def send_to_openai(text_chunk, previous_context="", file_path="", page_num=""):
         )},
         {"role": "user", "content": prompt}
       ],
-      max_tokens=1000,
+      max_tokens=3000,
       temperature=0.5,
       top_p=0.9
     )
     return response.choices[0].message.content
   except Exception as e:
-      return None  # Return None if API call fails
+      return None  # Return None If API Call Fails
 
 
 '''
@@ -589,7 +601,7 @@ def summarize_text(text, file_path, page_num):
         {"role": "system", "content": "You are an expert in summarizing technical documentation."},
         {"role": "user", "content": f"Summarize the following text from page {page_num} of {file_path}: {text}"}
       ],
-      max_tokens=300,
+      max_tokens=500,
       temperature=0.5
     )
     return response.choices[0].message.content.strip()
