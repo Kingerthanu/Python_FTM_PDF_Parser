@@ -8,7 +8,23 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 
 **The Breakdown:**
+  The Program Starts By Initially Needing 2 Things To Be Done. 
+  
+  This Is To Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With. As Well As Establishing An API Key In Which You Are Using To Communicate With _openai_ With.
 
+  After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
+
+  When The Process Starts It Will Initially Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Paralell Instead Of Sequentially As We Gain:
+  ```
+  O(max(X)) << O(X1 + X2 + ... + Xn)
+  ```
+  In Runtime.
+  
+  All Of These Threads Processing PDFs Will Be Tracked By A Built Class Called ProgressLogger--In Which We Will Add As An Argument Into Their Worker Function--Utilizing _rich.progress_ For UI Progress Bars Of How Far Along The PDF Processing Is For A Given Document As Well As The Total Progress. To Keep It In Fixed Position At The Bottom Of The Window It Uses _rich.live_ To Allow It To Asynchronous Updates When Inputs Come From Terminal. I Currently Am Using Mutex Locks To Ensure That Race-Conditions Do Not Happen With Worker Threads In Which Are All Trying To Communicate Their Log Status to Our ProgressLogger Instance At Once But May Of Over-Developed Now Realizing _rich.progress_ Has Specific Console Print Commands To Ensure Formatting And Thread-Safety And Don't Need To Keep Logs On Memory If Just Written To File.
+
+  The Workers Will Go And Run **process_pdf_with_summaries(...)** As Their Thread Function. In This Function It Will Start By Extracting The Contents Of The PDF Using _PyMuPDF_ Through A Page Extraction Function, **extract_content_with_mupdf(...)**.
+
+  
   
 <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
 
