@@ -13,6 +13,12 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
   #### **- Config Beforehand**
   The Program Starts By Initially Needing 2 Things To Be Done. 
 
+  1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
+  
+  2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
+
+  You Will Paste Them Here In The Script. Where `open.api_key` Is The _openai_ API Key Being Used And `directory_path` Is The Folder Containing Your PDFs To Train With.
+
 ```
 
 33  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,7 +28,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 37  openai.api_key = "________"
 38  
 39  # Specify The Directory Path Of Your PDFs
-40  directory_path = r"C:\Users\bensp\Downloads\demo"
+40  directory_path = r"______"
 41  
 42  
 43  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -30,9 +36,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 ```
 
-    1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
   
-    2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
   
   After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
 
