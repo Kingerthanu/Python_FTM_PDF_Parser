@@ -107,7 +107,7 @@ After Extracting The Raw Responses From OpenAI, The Program Generates Summaries 
 #### **- Generating JSON Files For Training**
 Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset. 
 
-Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progress Bar And Log Information Indicating Completion. This Pipeline Ensures That Fine-Tuned Models Receive Well-Organized And Contextualized Data For High-Quality Training Outcomes.
+Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progress Bar And Log Information Indicating Completion With A Solid Green Bar.
 
 
 <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
