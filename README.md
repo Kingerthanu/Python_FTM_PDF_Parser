@@ -11,7 +11,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 ### **The Breakdown:**
 
   #### **- Config Beforehand**
-  The Program Starts By Initially Needing 2 Things To Be Done. 
+  The Program Starts By Initially Needing 3 Things To Be Done. 
 
   1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
   
@@ -36,6 +36,31 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 ```
 
+  3.) Ensure You Have All Required Libraries (I Tried Making It Nice So You Can pip Everything In):
+  ```
+
+  # For OpenAI API Client To Send And Receive Fine-Tuning Data.
+  pip install --upgrade openai
+  
+  # For PDF Reading And Text/Image Extraction Using PyMuPDF.
+  pip install --upgrade pymupdf
+  
+  # For Handling Image Manipulation In The Code.
+  pip install --upgrade Pillow
+  
+  # For Extracting Tables From PDFs Using Tabula.
+  pip install --upgrade tabula-py
+  
+  # For Displaying Progress Bars And Live Terminal Updates.
+  pip install --upgrade rich
+  
+  # For BLIP-2 And Other Machine Learning Tasks Using Torch.
+  pip install --upgrade torch
+  
+  # For BLIP-2 Image Captioning And Model Processing.
+  pip install --upgrade transformers
+
+  ```
 
   #### **- Parallel PDF Processing**
   When The Process Starts, It Will Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Parallel Instead Of Sequentially. Let `X1, X2, ..., Xn` Represent The Time It Takes To Process Each PDF. The Time Complexity For Sequential Execution Is:
