@@ -21,7 +21,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
   #### **- Parallel PDF Processing**
   When The Process Starts It Will Initially Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Paralell Instead Of Sequentially As We Gain:
   ```
-  O(max(X)) << O(X1 + X2 + ... + Xn)
+  O(max(X1, X2, ..., Xn)) < O(X1 + X2 + ... + Xn)
   ```
   In Runtime.
   
