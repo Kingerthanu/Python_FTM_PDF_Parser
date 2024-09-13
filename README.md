@@ -22,9 +22,25 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
   
   All Of These Threads Processing PDFs Will Be Tracked By A Built Class Called ProgressLogger--In Which We Will Add As An Argument Into Their Worker Function--Utilizing _rich.progress_ For UI Progress Bars Of How Far Along The PDF Processing Is For A Given Document As Well As The Total Progress. To Keep It In Fixed Position At The Bottom Of The Window It Uses _rich.live_ To Allow It To Asynchronous Updates When Inputs Come From Terminal. I Currently Am Using Mutex Locks To Ensure That Race-Conditions Do Not Happen With Worker Threads In Which Are All Trying To Communicate Their Log Status to Our ProgressLogger Instance At Once But May Of Over-Developed Now Realizing _rich.progress_ Has Specific Console Print Commands To Ensure Formatting And Thread-Safety And Don't Need To Keep Logs On Memory If Just Written To File.
 
-  The Workers Will Go And Run **process_pdf_with_summaries(...)** As Their Thread Function. In This Function It Will Start By Extracting The Contents Of The PDF Using _PyMuPDF_ Through A Page Extraction Function, **extract_content_with_mupdf(...)**.
+  The Workers Will Go And Run **process_pdf_with_summaries(...)** As Their Thread Function. In This Function It Will Start By Extracting The Contents Of The PDF Using _PyMuPDF_ Through A Page Extraction Function, **extract_content_with_mupdf(...)**. _PyMuPDF_ Will Work Well In Order To Grab Structured Pieces Of Data Compared To Previous Implementations With _PyPDF2_. _PyMuPDF_ Will Start By Grabbing The Raw Text Of The Page, Ensuring Ligatures (Or Combined Text) Is Properly Represented As PDFs Seem To Have Odd Formatting And Can Cause Line Skips. We Then Grab The Images On The Current Page, Ensuring _PyMuPDF_ Gives As Much Metadata On The Image As Possible To Enhance Contexting To Our AI. We Then Load These Images Into Memory And Run A Blip-2 Captioning On The Given Image (This Is Also Where OCR Is Commented Out). Blip-2 Works Kinda Good At Knowing What A Photo Is Shaped To Be But Has No Sense Of Detail So Probably Will Be Deprecated And Could Use LLaVa Or Something More Local And Proper.
 
-  
+  After Getting These Blip-2 Captions, We Then Scan The Document Page For Any Tables Through Tabula. This Will Quickly Format Them Into Strings. After Getting The Caption, Text, And Table Data It Will All Be Added In A List Of Dictionaries In Which Are Formatted As Follows:
+  ```
+
+  {
+      "page_num": page_num,
+      "text": text + " " + " " + blip_caption + " " + table_data,
+      "images": images,
+      "metadata": doc.metadata,
+      "annotations": list(page.annots()) if page.annots() else [],
+      "links": page.get_links()
+  }
+
+  ```
+  This Helps Contextualize Structure Of The Page To The AI Model So It Has More Meaning Of What The Page IS. While It's Not All In-Line For When It Occurs Like table_data I May Have To Go To PDFMiner And PDFPlumber Or Change To Parsing By Dictionaries So I Can Dynamically Parse A Page By Group Sections As Right Now Its Hard To Correlate Figures To Given Images Or Tables. Still Currently Is Really Good Though Currently I've Just Been Holding Back Changes Like These For Until I Get LLaVa Set-Up For Local Multi-Modal Image Processing As Right Now I Have A Stable Foundation And Don't Want To Mess With It Before A Big Lib Deployment.
+
+  After Getting Each One Of These Dictionary Structs We Go Back Up To **process_pdf_with_summaries(...)**
+
   
 <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
 
