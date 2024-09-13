@@ -165,7 +165,7 @@ class ProgressLogger:
   '''
   def write_to_debug_file(self, message : str) -> None:
     '''Writes The Given Log Message To The Debug Log File.'''
-    with open(self.debug_file, 'w', encoding='utf-8') as f:
+    with open(self.debug_file, 'a', encoding='utf-8') as f:
       f.write(message + '\n')
 
 
