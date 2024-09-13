@@ -19,26 +19,29 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
   After You Fill In These Details Within The Config Located On Line 33 -> Line 43 You Will Be Set.
 
   #### **- Parallel PDF Processing**
-  When the process starts, it will attempt to split the given PDFs into their own worker threads. This allows us to process many PDFs in parallel instead of sequentially. Let `X1, X2, ..., Xn` represent the time it takes to process each PDF. The time complexity for sequential execution is:
+  When The Process Starts, It Will Attempt To Split The Given PDFs Into Their Own Worker Threads. This Allows Us To Process Many PDFs In Parallel Instead Of Sequentially. Let `X1, X2, ..., Xn` Represent The Time It Takes To Process Each PDF. The Time Complexity For Sequential Execution Is:
+  
   ```
   O(X1 + X2 + ... + Xn) = O( Σ(Xi), for i=1 to n )
   ```
 
 
-  In contrast, the time complexity for parallel execution, assuming sufficient threads, is:
+  
+  In Contrast, The Time Complexity For Parallel Execution, Assuming Sufficient Threads, Is:
   ```
   O(max(X1, X2, ..., Xn))
   ```
 
   
-  Since the sum of the individual times is always greater than or equal to the maximum time, we have the relationship:
+  
+  Since The Sum Of The Individual Times Is Always Greater Than Or Equal To The Maximum Time, We Have The Relationship:
 
   ```
   O(max(X1, X2, ..., Xn)) <= O( Σ(Xi), for i=1 to n )
   ```
  
-  Therefore, parallel execution can result in a significantly reduced runtime compared to sequential execution, particularly when there is a large disparity among the individual processing times.
-
+  
+  Therefore, Parallel Execution Can Result In A Significantly Reduced Runtime Compared To Sequential Execution, Particularly When There Is A Large Disparity Among The Individual Processing Times.
 
   
   All Of These Threads Processing PDFs Will Be Tracked By A Built Class Called ProgressLogger--In Which We Will Add As An Argument Into Their Worker Function--Utilizing _rich.progress_ For UI Progress Bars Of How Far Along The PDF Processing Is For A Given Document As Well As The Total Progress. To Keep It In Fixed Position At The Bottom Of The Window It Uses _rich.live_ To Allow It To Asynchronous Updates When Inputs Come From Terminal. I Currently Am Using Mutex Locks To Ensure That Race-Conditions Do Not Happen With Worker Threads In Which Are All Trying To Communicate Their Log Status to Our ProgressLogger Instance At Once But May Of Over-Developed Now Realizing _rich.progress_ Has Specific Console Print Commands To Ensure Formatting And Thread-Safety And Don't Need To Keep Logs On Memory If Just Written To File.
