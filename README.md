@@ -9,41 +9,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 **The Breakdown:**
 
-  Before Running The Program 3 Specific Things Need To Be Done To Ensure Valid Benchmarking These Are: <br>
-    &nbsp;1.) Provide fine_tune_id On Line 263. <br>
-    &nbsp;2.) Provide An openai.api_key On Line 6. <br>
-    &nbsp;3.) Provide A .json File In Which Follows The Style-Guideline (**Shown Below**), Filling In "question" And "expected_answer" For Each Question In Questions <br>
-
-  The Stylization Of The Benchmarks Should Be As Follows, Provided In A .json:
-
-    # You Don't Need "given_answer", "differences" or "similarity" As Will Be Generated During Runtime
-    {
-      "questions": [
-            {
-              "question": "YOUR QUESTION",
-              "expected_answer": "YOUR EXPECTED ANSWER (WHAT YOU WANT THE FINE-TUNED MODEL TO SAY)",
-              "given_answer": "____",
-              "similarity": ____,
-              "differences": ____
-            },
-            {
-              "question": "YOUR QUESTION",
-              "expected_answer": "YOUR EXPECTED ANSWER (WHAT YOU WANT THE FINE-TUNED MODEL TO SAY)",
-              "given_answer": "____",
-              "similarity": ____,
-              "differences": ____
-            },
-          ]
-    }
-
-  After The 3 Preliminary Tasks Are Complete, You Can Run The Script. 
-
-  When Running The Script We Will Start By Initially Finding The Actual Model ID Associated With The Fine-Tuned Model ID We Are Provided By openai When Fine-Tuning (**fine_tune_id**). If We Provided A Valid Fine-Tuned ID, We Will Then Dump The Contents Of Our "questions" (Benchmarks) To Be Done Out Into A Struct. To Then Evaluate Each "question" In Our Pulled From .json We Will Use Multi-Threading. This Is Achieved In **evaluate_benchmark(...)**; We Will Send Off A Worker Thread To Process An Individual Benchmarking Question Entry, This Allows Us To Process Many Benchmarks In Paralell Instead Of Sequentially Processing Questions.
-
-  In The Worker Function (**process_question(...)**), It Will Be Given An Individual Benchmark And In Each One Of These, We Will Have A "question" And "expected_answer". Initially We Will Ask Our Fine-Tuned Model Our Question, Getting It's Response. From This Fine-Tuned Model's Response, We Will Then Compare It To The Solution We Expected To Get Thats Provided in "expected_answer". Using openai Again, We Ask The ChatGPT-4 Model To Compare And Give A Similarity Score Between These Two Answers Based Upon Theoretical And Semantic Relations--This Can Allow Us To Quickly Compare Our Differing Solutions And Recommend Changes To Our Model If Lacking In A Specific Subtopic In The Fine-Tuned Model's Informational Knowledge.
-
-  After These Worker Threads Ask These Questions And Get Their Similarity Scores, We Will Then Add Them All Back Together In A List Struct. Now When Leaving **evaluate_benchmark(...)** We Return This List Struct Of All The Worker Threads' Answers And Can Inject This Back Into The .json Provided, Adding "given_answer" "similarity" And "differences" Now As Entries For Each Benchmark. Before The Process Ends We Will Also Quickly Print The Contents Of Each Benchmark Out, Outlining The Similarity Score And Reasoning For This Score In Terminal.
-
+  
 <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
 
 ----------------------------------------------
