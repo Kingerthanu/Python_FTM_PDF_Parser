@@ -105,7 +105,7 @@ Each Text Chunk Is Processed Using The `send_to_openai_with_retry(...)` Function
 After Extracting The Raw Responses From OpenAI, The Program Generates Summaries Using `summarize_text(...)`. These Summaries Provide A Condensed Form Of The Extracted Text, Reducing Token Usage While Retaining Key Contextual Details From The Document. These Summaries Are Stored And Used As Context When Processing Subsequent Pages, Allowing The Model To Maintain A Coherent Understanding Of The Document As A Whole.
 
 #### **- Generating JSON Files For Training**
-Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset. 
+Once The Model Has Processed The Text Chunks, All Responses Are Stored In A JSON Format. Two Versions Of These JSON Files Are Created: A Raw Output Containing All Responses, And A Cleaned Output That Strips Away Formatting Inconsistencies And Ensures Consistency Across The Dataset (`clean_response(...)`). 
 
 Finally, The Program Ends Once All PDFs Have Been Processed, With Both The Progress Bar And Log Information Indicating Completion With A Solid Green Bar.
 
