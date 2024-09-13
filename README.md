@@ -44,7 +44,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
   After These Worker Threads Ask These Questions And Get Their Similarity Scores, We Will Then Add Them All Back Together In A List Struct. Now When Leaving **evaluate_benchmark(...)** We Return This List Struct Of All The Worker Threads' Answers And Can Inject This Back Into The .json Provided, Adding "given_answer" "similarity" And "differences" Now As Entries For Each Benchmark. Before The Process Ends We Will Also Quickly Print The Contents Of Each Benchmark Out, Outlining The Similarity Score And Reasoning For This Score In Terminal.
 
-<img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="55" height="49"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="55" height="49">
+<img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="75" height="69"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="75" height="69"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="75" height="69"> <img src="https://github.com/user-attachments/assets/6b31e19c-2b36-4a74-8a82-01f15669ba14" alt="Cornstarch <3" width="75" height="69">
 
 ----------------------------------------------
 
