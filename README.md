@@ -9,6 +9,7 @@ This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, All
 
 **The Breakdown:**
 
+  ### Config
   The Program Starts By Initially Needing 2 Things To Be Done. 
   
   This Is To Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With. As Well As Establishing An API Key In Which You Are Using To Communicate With _openai_ With.
