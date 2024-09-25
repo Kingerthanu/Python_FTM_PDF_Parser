@@ -50,7 +50,6 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
   3.) Ensure You Have All Required Libraries (I Tried Making It Nice So You Can pip Everything In):
   ```
-
   # For OpenAI API Client To Send And Receive Fine-Tuning Data.
   pip install --upgrade openai
   
@@ -77,15 +76,12 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
   
   # For Matrix-Based Image Handling And Processing.
   pip install --upgrade numpy
-
   ```
 
   You Will Also Have To Download The LLM Models Locally From Ollama By Doing:
   ```
-
     ollama pull llama3.1:8b
     ollama pull llava:latest
-
   ```
 
   <h4>Important:</h4>
