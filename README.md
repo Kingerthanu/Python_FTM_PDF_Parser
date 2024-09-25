@@ -66,10 +66,10 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
   pip install --upgrade rich
   
   # For Local **LLaMA** And **LLaVA** Model Support.
-  pip install --upgrade Ollama
+  pip install --upgrade ollama
   
   # For OCR Support (Requires Tesseract Installed Separately).
-  pip install --upgrade **Pytesseract**
+  pip install --upgrade pytesseract
   
   # For Image Processing And Preprocessing For OCR.
   pip install --upgrade opencv-python
