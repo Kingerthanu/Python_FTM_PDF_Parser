@@ -71,7 +71,7 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   Important:
   For OCR to work, you must also install the Tesseract OCR engine on your system. Follow the instructions based on your operating system:
   
-  Windows: Download and install Tesseract from <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
+  Windows: Download and install Tesseract from <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html" target="_blank">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
   
   macOS: Install using Homebrew:
   ```
