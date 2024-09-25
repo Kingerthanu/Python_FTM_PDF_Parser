@@ -174,7 +174,7 @@ Advanced Fine-Tuning Mechanisms: Another Goal Is To Use Multi-Domain Context Cha
 
  <img width="1768" alt="image" src="https://github.com/user-attachments/assets/61479c16-fa29-4fc9-94c6-fbf885a73a4e">
 
-  **Screenshot Of Console UI (With A Bit Of Sharpie:**
+  **Screenshot Of Console UI (With A Bit Of Sharpie):**
 
   <img width="1847" alt="image" src="https://github.com/user-attachments/assets/9552d56e-3dcf-41f5-bef2-acc4c51b8105">
 
