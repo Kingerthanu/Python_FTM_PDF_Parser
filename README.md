@@ -80,8 +80,8 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
   You Will Also Have To Download The LLM Models Locally From Ollama By Doing:
   ```
-    ollama pull llama3.1:8b
-    ollama pull llava:latest
+  ollama pull llama3.1:8b
+  ollama pull llava:latest
   ```
 
   <h4>Important:</h4>
