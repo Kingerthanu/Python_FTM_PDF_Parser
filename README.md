@@ -66,18 +66,46 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
 
   ```
 
-  #### **- Local LLM Support**
-  Now Implemented Is Two Local LLM Models Provided Through An ollama Session (In Which Is Why You See This As A Dependency In This Project):
-  
-  <img src="https://github.com/user-attachments/assets/5b7de0ce-5f9b-4922-973c-a702bc92c695" alt="Cornstarch <3" width="25" height="25">  LLaVA<br>
-  <br>
-  <img src="https://github.com/user-attachments/assets/39175c73-b5cd-4583-ad2d-7809c0be13ba" alt="Cornstarch <3" width="25" height="25">  LLaMA
-  
-  We Will Install Specifically Two Models; One Is Called The **Large Language and Vision Assistant (LLaVA)** And Is Employed To Give Detailed Explanations Of Images Through Text. This Can Be Employed On Image's Seen In Training Data PDFs To Allow Us To Get A Much More Detailed Analysis Of The Image Than **BLIP-2** Ever Gave Us. Another One Is Called **LLaMA** (Sadly Initials Don't Go To Anything For Some Reason) And Is Made My Meta AI. This Is A Very Performant AI Model In Which Benchmarks Almost As Good As OpenAI's Models In Many Tests. We Use **LLaMA** and **LLaVA** As Local LLMs To Allow Us To Cut-Down On Some Excessive Token Usage. Also Things Like **LLaVA** Have No Real Alternative Other Than Paid Subscriptions Like OpenAI's Models. So While We Are Running Beefy Codebases Under Our Computer To Scan And Reason Images, It Does Allow Us To Get A Much More Lavish Explanation Of Image Data.
+#### **- Local LLM Support**
+This branch introduces support for two local large language models (LLMs) via ollama, allowing for high-performance, on-device AI processing without the need for cloud-based services. The two integrated models are:
 
+<img src="https://github.com/user-attachments/assets/5b7de0ce-5f9b-4922-973c-a702bc92c695" alt="Cornstarch <3" width="25" height="25"> LLaVA (Large Language and Vision Assistant):
+LLaVA is designed to process and understand visual data by providing detailed, context-rich explanations of images. It is specifically tuned for multi-modal tasks, meaning it excels at tasks requiring both visual and text-based understanding. In the context of this pipeline, LLaVA replaces BLIP-2 as the primary model used for generating detailed descriptions of images embedded within PDFs. The move to LLaVA significantly enhances the quality of image interpretation, as the model is capable of giving far more granular, technical descriptions of visual elements like schematics, diagrams, and charts. This is particularly useful when fine-tuning models on multi-modal datasets where image understanding is crucial.
 
-  
+The integration with LLaVA allows the system to process images in PDFs locally, cutting down on cloud-based API calls, which results in significant token usage savings and improved data security. LLaVA also supports temperature-controlled responses, ensuring more deterministic outputs based on user requirements, making it flexible for different use cases.
 
+<br>
+<img src="https://github.com/user-attachments/assets/39175c73-b5cd-4583-ad2d-7809c0be13ba" alt="Cornstarch <3" width="25" height="25"> LLaMA (Large Language Model Meta AI):
+LLaMA, developed by Meta AI, is a state-of-the-art transformer-based LLM designed for generating human-like text. In this updated pipeline, LLaMA is used for generating extremely detailed textual descriptions, technical explanations, and contextual insights from extracted PDF content. LLaMA’s performance rivals that of OpenAI’s GPT models but operates fully on-device, providing cost-effective and efficient processing.
+
+This dual integration with LLaVA and LLaMA allows for complex image-to-text and text-based reasoning tasks to be performed locally, minimizing the reliance on OpenAI’s cloud services. It enables the system to generate rich, high-quality explanations while reducing token usage and associated costs. Additionally, the local nature of the models allows for more privacy-preserving workflows, where sensitive data need not be transmitted over the internet.
+
+#### **- OCR Support**
+The system now includes Optical Character Recognition (OCR) functionality, implemented through pytesseract. OCR is used to extract text from images in PDFs where the text is embedded as part of an image, such as scanned documents or graphical content. The OCR support is particularly helpful when dealing with documents that contain text in non-textual formats, such as scanned images or screenshots.
+
+However, OCR in this version of the codebase is noted to have some limitations and may produce inconsistent results for highly complex images, especially in the technical PDF domain. The text extraction accuracy is influenced by image quality and formatting irregularities. Currently, pytesseract handles most of the OCR tasks, but it is configured to preprocess images by resizing and applying sharpening filters through OpenCV to enhance recognition accuracy.
+
+The OCR pipeline is scheduled for future enhancements, with potential integration of more robust solutions like LLaVA or additional machine learning-based OCR tools for better accuracy and consistency in complex images.
+
+#### **- Prompt Engineering Optimizations**
+One of the significant upgrades in this branch is the refined prompt engineering strategy, particularly for communicating with OpenAI's GPT models and the local LLaMA model. Key improvements include:
+
+Contextualized Prompts for Text Chunking: The pipeline now includes advanced context preservation between consecutive pages of a document. When splitting text into smaller, manageable chunks (to comply with API token limits), the system intelligently preserves context from previous pages or sections. This is especially important in maintaining coherence when generating fine-tuning datasets, as it ensures that each chunk is processed with an understanding of the overall document structure.
+
+Optimized Prompts for Fine-Tuning: The prompts for sending text chunks to OpenAI or LLaMA are crafted to elicit highly technical and detailed responses. These prompts are structured to break down the integration of hardware and software, particularly in real-time systems, while asking for code samples, performance benchmarks, and practical optimizations. The refined prompt structures ensure responses remain highly relevant and in-depth, directly addressing key topics with a focus on maximizing actionable insights.
+
+Retry Logic for API Stability: The prompt engineering process is bolstered by a robust retry mechanism, ensuring that intermittent failures during communication with APIs (such as OpenAI's GPT) do not disrupt the workflow. The system will retry failed requests, ensuring reliability in generating fine-tuning data and reducing the risk of data loss during API calls.
+
+#### **- Looking Forward**
+The future development roadmap for the Python_FTM_PDF_Parser pipeline focuses on further integrating multi-domain contextual chaining. This would allow the system to create more comprehensive, interlinked datasets by chaining contextual information across different types of data sources (e.g., PDFs, images, tables, and structured data).
+
+Multi-Domain Contextual Chaining will enable the system to:
+
+Maintain Cross-Document Context: By linking insights and information from multiple PDFs and documents, the system can maintain a broader understanding across different sources. For instance, if multiple technical manuals or whitepapers are being fine-tuned on, the system will be able to cross-reference related concepts across these documents, creating a richer training dataset.
+
+Enhanced Multimodal Understanding: The next step is to refine how text, tables, and images are processed together. By integrating image captions from LLaVA, text-based reasoning from LLaMA, and table data from Tabula, the system aims to produce datasets that are more interconnected, mimicking real-world complex data interactions.
+
+Advanced Fine-Tuning Mechanisms: Another goal is to use multi-domain context chaining for more specialized fine-tuning, especially in areas like real-time performance optimization, hardware/software co-design, and embedded systems. The vision is to use this framework not just for text-based fine-tuning, but also for developing models that can reason across modalities—effectively creating models that understand both technical language and technical visuals.
 <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
 
 ----------------------------------------------
