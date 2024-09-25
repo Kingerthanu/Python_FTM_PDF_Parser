@@ -98,8 +98,22 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
 
   You Also May Need To Install Java For Tabula As This Codebase Relies On It.
-  
 
+
+#### **- Notice**
+This branch uses local LLMs (Large Language Models), which require substantial system resources. For smooth operation, please ensure the following:
+
+- CUDA Support: If your system has a CUDA-supported GPU, ensure it is configured for accelerated processing. Verify by running nvcc --version in your terminal. If CUDA is unavailable, the models will fall back to CPU execution, though this will be significantly slower.
+  
+- Memory Requirements: Make sure your system has enough RAM. Running these models locally can require 16GB or more system memory, and a GPU with at least 8GB of VRAM is recommended.
+  
+- Disk Space: Local LLMs like LLaVA and LLaMA can take up several gigabytes of storage. Ensure you have sufficient disk space available to store these models.
+  
+- Cooling: Running LLMs generates heat, especially on extended tasks. Ensure your system has adequate cooling to prevent overheating.
+  
+- Model Versions: This branch supports specific versions of LLaVA and LLaMA. Ensure you are using compatible versions to avoid compatibility issues.
+
+  
 #### **- Local LLM Support**
 This Branch Introduces Support For Two Local Large Language Models (LLMs) Via Ollama, Allowing For High-Performance, On-Device AI Processing Without The Need For Cloud-Based Services. The Two Integrated Models Are:
 
