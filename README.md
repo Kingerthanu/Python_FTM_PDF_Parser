@@ -156,7 +156,7 @@ Enhanced Multimodal Understanding: The Next Step Is To Refine How Text, Tables, 
 
 Advanced Fine-Tuning Mechanisms: Another Goal Is To Use Multi-Domain Context Chaining For More Specialized Fine-Tuning, Especially In Areas Like Real-Time Performance Optimization, Hardware/Software Co-Design, And Embedded Systems. The Vision Is To Use This Framework Not Just For Text-Based Fine-Tuning, But Also For Developing Models That Can Reason Across Modalities—Effectively Creating Models That Understand Both Technical Language And Technical Visuals.
 
-<img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/1fc90166-a62b-4d91-a087-5da5a3a7076f" alt="Cornstarch <3" width="65" height="59">
+<img src="https://github.com/user-attachments/assets/a09d9d14-ad49-4054-8e46-28c780d5a279" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/a09d9d14-ad49-4054-8e46-28c780d5a279" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/a09d9d14-ad49-4054-8e46-28c780d5a279" alt="Cornstarch <3" width="65" height="59"> <img src="https://github.com/user-attachments/assets/a09d9d14-ad49-4054-8e46-28c780d5a279" alt="Cornstarch <3" width="65" height="59">
 
 ----------------------------------------------
 
