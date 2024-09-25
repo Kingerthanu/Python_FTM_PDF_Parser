@@ -51,7 +51,7 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   # For PDF Reading And Text/Image Extraction Using PyMuPDF.
   pip install --upgrade pymupdf
   
-  # For Handling Image Manipulation In The Code.
+  # For Handling Image Manipulation.
   pip install --upgrade Pillow
   
   # For Extracting Tables From PDFs Using Tabula.
@@ -60,11 +60,17 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   # For Displaying Progress Bars And Live Terminal Updates.
   pip install --upgrade rich
   
-  # For BLIP-2 And Other Machine Learning Tasks Using Torch.
-  pip install --upgrade torch
+  # For Local LLaMA And LLaVA Model Support.
+  pip install --upgrade ollama
   
-  # For BLIP-2 Image Captioning And Model Processing.
-  pip install --upgrade transformers
+  # For OCR Support (Requires Tesseract Installed Separately).
+  pip install --upgrade pytesseract
+  
+  # For Image Processing And Preprocessing For OCR.
+  pip install --upgrade opencv-python
+  
+  # For Matrix-Based Image Handling And Processing.
+  pip install --upgrade numpy
 
   ```
 
