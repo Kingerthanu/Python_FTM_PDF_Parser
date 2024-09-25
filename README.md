@@ -3,7 +3,7 @@ Python Script In Which Tries To Accelerate The PDF Parsing Stage Of Many openai 
 
 This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, Allowing Many Worker Threads To Talk To openai About Their Own Document. This Can Allow The Process To Be Scanning Multiple Documents In Paralell In Which Can Greatly Improve Runtime. To Improve Reliability While Keeping Token Usage To A Lower Amount We Employed Chunking Of Pages Contents To Allow Us To Minimize Generalizations Of The Page Contents During Training Data Generation. The openai Request Will Be Provided A Summary Of The Last 2 Chunks/Requests To Help Them Correlate Context Between These Chunks. This Summation Will Be Generated Again By An openai Request To Generalize The Provided Chunk Context. Data Analysis Currently Is Being Done By **PyMuPDF** And Tabula Mainly. **Tabula** Is Utilized For Data Tables Embedded In A PDF In Which Is Good To Help With Properly Giving openai A Structured Way Of Knowing What A Table Is Saying. 
 
-One of the major updates in this version is the integration of local large language models (LLMs) via **Ollama**, specifically **LLaMA** (for textual analysis) and **LLaVA** (for image-based reasoning). **LLaVA** processes images embedded in PDFs, providing detailed descriptions of diagrams, schematics, and other visuals. **LLaMA**, on the other hand, handles technical explanations, generating in-depth textual insights from the parsed PDF content. This local processing reduces reliance on cloud-based services, minimizing API costs and improving data security by processing sensitive documents on-device.
+One of the major updates in this version is the integration of local large language models (LLMs) via **Ollama**, specifically **LLaMA** (for textual analysis) and **LLaVA** (for image-based reasoning). **LLaVA** processes images embedded in PDFs, providing detailed descriptions of diagrams, schematics, and other visuals. **LLaMA**, on the other hand, handles technical explanations, generating in-depth textual insights from the parsed PDF contents from both our OCR from Tesseract and image-based reasoning from LLaVA (LLaVAs OCR can be inconsistent so using Tesseract can help smooth out image-interpretation. This local processing reduces reliance on cloud-based services, minimizing API costs.
 
 This branch also introduces OCR functionality using **Pytesseract** for cases where text is embedded in images, such as scanned documents or diagrams. Images are preprocessed with **OpenCV** to improve OCR accuracy by applying sharpening filters and resizing, ensuring that even challenging image-based text can be effectively extracted.
 
@@ -48,7 +48,7 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
 ```
 
-  3.) Ensure You Have All Required Libraries (I Tried Making It Nice So You Can pip Everything In):
+  3.) Ensure You Have All Required Libraries (I Tried Making It Nice So You Can pip Everything In But There Still Is Some Libraries That Cannot Be Described Below):
   ```
   # For OpenAI API Client To Send And Receive Fine-Tuning Data.
   pip install --upgrade openai
@@ -134,7 +134,7 @@ The System Now Includes Optical Character Recognition (OCR) Functionality, Imple
 
 However, OCR In This Version Of The Codebase Is Noted To Have Some Limitations And May Produce Inconsistent Results For Highly Complex Images, Especially In The Technical PDF Domain. The Text Extraction Accuracy Is Influenced By Image Quality And Formatting Irregularities. Currently, **Pytesseract** Handles Most Of The OCR Tasks, But It Is Configured To Preprocess Images By Resizing And Applying Sharpening Filters Through **OpenCV** To Enhance Recognition Accuracy.
 
-The OCR Pipeline Is Scheduled For Future Enhancements, With Potential Integration Of More Robust Solutions Like **LLaVA** Or Additional Machine Learning-Based OCR Tools For Better Accuracy And Consistency In Complex Images.
+The OCR Pipeline Is Scheduled For Future Enhancements, With Potential Integration Of More Robust Solutions Like Full **LLaVA** Or Additional Machine Learning-Based OCR Tools For Better Accuracy And Consistency In Complex Images. As Currently We Are Summating The Contents Of Our OCR Of Our Image With The **LLaVA** Description Of The Image Using **LLaMA**.
 
 #### **- Prompt Engineering Optimizations**
 One Of The Significant Upgrades In This Branch Is The Refined Prompt Engineering Strategy, Particularly For Communicating With OpenAI's GPT Models And The Local **LLaMA** Model. Key Improvements Include:
@@ -143,7 +143,6 @@ Contextualized Prompts For Text Chunking: The Pipeline Now Includes Advanced Con
 
 Optimized Prompts For Fine-Tuning: The Prompts For Sending Text Chunks To OpenAI Or **LLaMA** Are Crafted To Elicit Highly Technical And Detailed Responses. These Prompts Are Structured To Break Down The Integration Of Hardware And Software, Particularly In Real-Time Systems, While Asking For Code Samples, Performance Benchmarks, And Practical Optimizations. The Refined Prompt Structures Ensure Responses Remain Highly Relevant And In-Depth, Directly Addressing Key Topics With A Focus On Maximizing Actionable Insights.
 
-Retry Logic For API Stability: The Prompt Engineering Process Is Bolstered By A Robust Retry Mechanism, Ensuring That Intermittent Failures During Communication With APIs (Such As OpenAI's GPT) Do Not Disrupt The Workflow. The System Will Retry Failed Requests, Ensuring Reliability In Generating Fine-Tuning Data And Reducing The Risk Of Data Loss During API Calls.
 
 #### **- Looking Forward**
 The Future Development Roadmap For The Parser Pipeline Focuses On Further Integrating Multi-Domain Contextual Chaining. This Would Allow The System To Create More Comprehensive, Interlinked Datasets By Chaining Contextual Information Across Different Types Of Data Sources (E.G., PDFs, Images, Tables, And Structured Data).
