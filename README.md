@@ -67,7 +67,14 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   ```
 
   #### **- Local LLM Support**
-  Now Implemented Is Two Local LLM Models Provided Through An ollama Session (In Which Is Why You See This As A Dependency In This Project). We Will Install Specifically Two Models; One Is Called The **Large Language and Vision Assistant (LLaVA)** And Is Employed To Give Detailed Explanations Of Images Through Text. This Can Be Employed On Image's Seen In Training Data PDFs To Allow Us To Get A Much More Detailed Analysis Of The Image Than **BLIP-2** Ever Gave Us. Another One Is Called **LLaMA** (Sadly Initials Don't Go To Anything For Some Reason) And Is Made My Meta AI. This Is A Very Performant AI Model In Which Benchmarks Almost As Good As OpenAI's Models In Many Tests. We Use **LLaMA** and **LLaVA** As Local LLMs To Allow Us To Cut-Down On Some Excessive Token Usage. Also Things Like **LLaVA** Have No Real Alternative Other Than Paid Subscriptions Like OpenAI's Models. So While We Are Running Beefy Codebases Under Our Computer To Scan And Reason Images, It Does Allow Us To Get A Much More Lavish Explanation Of Image Data.
+  Now Implemented Is Two Local LLM Models Provided Through An ollama Session (In Which Is Why You See This As A Dependency In This Project):
+  
+  ![lavalavapolskalava](https://github.com/user-attachments/assets/5b7de0ce-5f9b-4922-973c-a702bc92c695)
+  
+  ![metaFacebook](https://github.com/user-attachments/assets/39175c73-b5cd-4583-ad2d-7809c0be13ba)
+
+  
+  We Will Install Specifically Two Models; One Is Called The **Large Language and Vision Assistant (LLaVA)** And Is Employed To Give Detailed Explanations Of Images Through Text. This Can Be Employed On Image's Seen In Training Data PDFs To Allow Us To Get A Much More Detailed Analysis Of The Image Than **BLIP-2** Ever Gave Us. Another One Is Called **LLaMA** (Sadly Initials Don't Go To Anything For Some Reason) And Is Made My Meta AI. This Is A Very Performant AI Model In Which Benchmarks Almost As Good As OpenAI's Models In Many Tests. We Use **LLaMA** and **LLaVA** As Local LLMs To Allow Us To Cut-Down On Some Excessive Token Usage. Also Things Like **LLaVA** Have No Real Alternative Other Than Paid Subscriptions Like OpenAI's Models. So While We Are Running Beefy Codebases Under Our Computer To Scan And Reason Images, It Does Allow Us To Get A Much More Lavish Explanation Of Image Data.
 
 
   
