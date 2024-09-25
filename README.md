@@ -80,6 +80,14 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
   ```
 
+  You Will Also Have To Download The LLM Models Locally From Ollama By Doing:
+  ```
+
+    ollama pull llama3.1:8b
+    ollama pull llava:latest
+
+  ```
+
   <h4>Important:</h4>
   
   For OCR to work, you must also install the Tesseract OCR engine on your system. Follow the instructions based on your operating system:
