@@ -15,28 +15,30 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
 ### **The Breakdown:**
 
   #### **- Config Beforehand**
-  The Program Starts By Initially Needing 3 Things To Be Done. 
+  The Program Starts By Initially Needing 4 Things To Be Done. 
 
   1.) Initially Garner Some PDF Documents In Which You Want To Use To Use As Primary Source Material To Fine-Tune A Model With.
   
   2.) Establish An API Key In Which You Are Using To Communicate With _openai_ With.
 
-  You Will Paste Them Here In The Script. Where `open.api_key` Is The _openai_ API Key Being Used And `directory_path` Is The Folder Containing Your PDFs To Train With.
+  3.) Provide The Specific Context In Which Your Training Data Should Try To Emphasize.
+
+  You Will Paste Them Here In The Script. Where `open.api_key` Is The _openai_ API Key Being Used And `directory_path` Is The Folder Containing Your PDFs To Train With. As Well As `focus_context` Being The Specific Context To Focus In Our Training Data.
 
 ```
 
-33  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-34  
-35  
-36  # Initialize The OpenAI Client With Your Specific API Key
-37  openai.api_key = "________"
-38  
-39  # Specify The Directory Path Of Your PDFs
-40  directory_path = r"______"
-41  
-42  
-43  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+19  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20  
+21  # Initialize The OpenAI Client With Your Specific API Key
+22  openai.api_key = "________"
+23  
+24  # Specify The Directory Path Of Your PDFs
+25  directory_path = r"______"
+26  
+27  # Specify The Focus Context To Utilize The Training Data In
+28  focus_context = "Real-Time Performance in RISC-V"
+29  
+30  # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ```
 
@@ -64,6 +66,21 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   # For BLIP-2 Image Captioning And Model Processing.
   pip install --upgrade transformers
 
+  ```
+
+  Important:
+  For OCR to work, you must also install the Tesseract OCR engine on your system. Follow the instructions based on your operating system:
+  
+  Windows: Download and install Tesseract from <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
+  
+  macOS: Install using Homebrew:
+  ```
+  brew install tesseract
+  ```
+
+  Linux: Install Tesseract using the package manager for your distribution:
+  ```
+  sudo apt install tesseract-ocr
   ```
 
 #### **- Local LLM Support**
