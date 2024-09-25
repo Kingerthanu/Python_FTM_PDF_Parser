@@ -3,13 +3,13 @@ Python Script In Which Tries To Accelerate The PDF Parsing Stage Of Many openai 
 
 This Is From The Multi-Threaded Approach Of Scanning Specific PDF Documents, Allowing Many Worker Threads To Talk To openai About Their Own Document. This Can Allow The Process To Be Scanning Multiple Documents In Paralell In Which Can Greatly Improve Runtime. To Improve Reliability While Keeping Token Usage To A Lower Amount We Employed Chunking Of Pages Contents To Allow Us To Minimize Generalizations Of The Page Contents During Training Data Generation. The openai Request Will Be Provided A Summary Of The Last 2 Chunks/Requests To Help Them Correlate Context Between These Chunks. This Summation Will Be Generated Again By An openai Request To Generalize The Provided Chunk Context. Data Analysis Currently Is Being Done By **PyMuPDF** And Tabula Mainly. **Tabula** Is Utilized For Data Tables Embedded In A PDF In Which Is Good To Help With Properly Giving openai A Structured Way Of Knowing What A Table Is Saying. 
 
-One of the major updates in this version is the integration of local large language models (LLMs) via **Ollama**, specifically **LLaMA** (for textual analysis) and **LLaVA** (for image-based reasoning). **LLaVA** processes images embedded in PDFs, providing detailed descriptions of diagrams, schematics, and other visuals. **LLaMA**, on the other hand, handles technical explanations, generating in-depth textual insights from the parsed PDF contents from both our OCR from Tesseract and image-based reasoning from LLaVA (LLaVAs OCR can be inconsistent so using Tesseract can help smooth out image-interpretation. This local processing reduces reliance on cloud-based services, minimizing API costs.
+One Of The Major Enhancements In This Version Is The Integration Of Local Large Language Models (LLMs) Via **Ollama**, Specifically **LLaMA** (For Textual Analysis) And **LLaVA** (For Image-Based Reasoning). **LLaVA** Processes Images Embedded In PDFs, Offering Detailed Descriptions Of Diagrams, Schematics, And Other Visuals, While **LLaMA** Handles Technical Explanations And Generates Detailed Textual Insights From The Parsed PDF Content. Combining Tesseract OCR For Text Extraction And Image-Based Reasoning From **LLaVA**, The Parser Provides Comprehensive Image Understanding, Reducing Reliance On Cloud-Based Services And Minimizing API Costs.
 
-This branch also introduces OCR functionality using **Pytesseract** for cases where text is embedded in images, such as scanned documents or diagrams. Images are preprocessed with **OpenCV** to improve OCR accuracy by applying sharpening filters and resizing, ensuring that even challenging image-based text can be effectively extracted.
+This Branch Also Adds OCR Support Using **Pytesseract**, Ideal For Cases Where Text Is Embedded In Images, Such As Scanned Documents. Images Are Preprocessed With **OpenCV** To Enhance OCR Accuracy By Resizing And Applying Sharpening Filters, Ensuring That Even Difficult Image-Based Text Can Be Effectively Extracted.
 
-Refined prompt engineering strategies now ensure highly technical and context-aware responses from both OpenAI’s GPT models and local **LLaMA** instances. When splitting document content into chunks, the system preserves context across pages to generate more coherent fine-tuning data. In addition, prompt structures are tailored to elicit detailed technical insights, with a focus on real-time performance, hardware/software co-design, and system optimization.
+Additionally, Prompt Engineering Has Been Enhanced To Ensure That Both OpenAI’s GPT Models And Local **LLaMA** Instances Provide Highly Technical And Context-Aware Responses. Chunking Preserves Context Across Pages To Generate Coherent Fine-Tuning Data, And The Prompts Are Now Structured To Elicit Technical Insights, With A Focus On Real-Time Performance, Hardware/Software Co-Design, And System Optimization.
 
-Looking forward, the system aims to incorporate multi-domain contextual chaining, allowing insights from various PDFs and sources to be linked together. This will enable richer, more comprehensive datasets by cross-referencing related content across multiple documents. The goal is to enable specialized fine-tuning in domains such as real-time system optimization and embedded systems design, with integrated multimodal reasoning across text, tables, and images.
+Future Enhancements Will Focus On Multi-Domain Contextual Chaining, Allowing Cross-Document Insights To Be Linked Together, Enabling Richer Datasets Through Contextual Linkages. The Goal Is To Enable Specialized Fine-Tuning For Real-Time System Optimization And Embedded System Design, With Integrated Multimodal Reasoning Across Text, Tables, And Images.
 
 **Also BTW The Debug Messages Will Stay And Keep Adding Up So Make Sure It Doesn't Take Up Too Much Of Your Storage As I Kept It Quite Thorough As A Lot Is Said In The Debug File That Isn't Said Through The Terminal.**
 
@@ -86,16 +86,16 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
   <h4>Important:</h4>
   
-  For OCR to work, you must also install the Tesseract OCR engine on your system. Follow the instructions based on your operating system:
+  For OCR To Work, You Must Also install the Tesseract OCR Engine On Your System. Follow The Instructions Based On Your Operating System:
   
-  Windows: Download and install **Tesseract** from <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html" target="_blank">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
+  Windows: Download And Install **Tesseract** From <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html" target="_blank">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
   
-  macOS: Install using Homebrew:
+  macOS: Install Using Homebrew:
   ```
   brew install tesseract
   ```
 
-  Linux: Install **Tesseract** using the package manager for your distribution:
+  Linux: Install **Tesseract** Using The Package Manager For Your Distribution:
   ```
   sudo apt install tesseract-ocr
   ```
@@ -105,17 +105,17 @@ Looking forward, the system aims to incorporate multi-domain contextual chaining
 
 
 #### **- Notice**
-This branch uses local LLMs (Large Language Models), which require substantial system resources. For smooth operation, please ensure the following:
+This Branch Uses Local LLMs (Large Language Models), Which Require Substantial System Resources. For Smooth Operation, Please Ensure The Following:
 
-- CUDA Support: If your system has a CUDA-supported GPU, ensure it is configured for accelerated processing. Verify by running `nvcc --version` in your terminal. If CUDA is unavailable, the models will fall back to CPU execution, though this will be significantly slower.
+- CUDA Support: If Your System Has A CUDA-supported GPU, Ensure It Is Configured For Accelerated Processing. Verify By Running `nvcc --version` In Your Terminal. If CUDA Is Unavailable, The Models Will Fall Back To CPU Execution, Though This Will Be Significantly Slower.
   
-- Memory Requirements: Make sure your system has enough RAM. Running these models locally can require 16GB or more system memory, and a GPU with at least 8GB of VRAM is recommended.
+- Memory Requirements: Make Sure Your System Has Enough RAM. Running These Models Locally Can Require 16GB Or More System Memory, And A GPU With At Least 8GB Of VRAM Is Recommended.
   
-- Disk Space: Local LLMs like **LLaVA** and **LLaMA** can take up several gigabytes of storage. Ensure you have sufficient disk space available to store these models.
+- Disk Space: Local LLMs Like **LLaVA** And **LLaMA** Can Take Up Several Gigabytes Of Storage. Ensure You Have Sufficient Disk Space Available To Store These Models.
   
-- Cooling: Running LLMs generates heat, especially on extended tasks. Ensure your system has adequate cooling to prevent overheating.
+- Cooling: Running LLMs Generates Heat, Especially On Extended Tasks. Ensure Your System Has Adequate Cooling To Prevent Overheating.
   
-- Model Versions: This branch supports specific versions of **LLaVA** and **LLaMA**. Ensure you are using compatible versions to avoid compatibility issues.
+- Model Versions: This Branch Supports Specific Versions Of **LLaVA** And **LLaMA**. Ensure You're Using Compatible Versions To Avoid Compatibility Issues.
 
   
 #### **- Local LLM Support**
