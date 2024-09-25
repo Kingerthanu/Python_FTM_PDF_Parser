@@ -74,7 +74,8 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
 
   ```
 
-  Important:
+  <h4>Important:</h4>
+  
   For OCR to work, you must also install the Tesseract OCR engine on your system. Follow the instructions based on your operating system:
   
   Windows: Download and install Tesseract from <a href="https://tesseract-ocr.github.io/tessdoc/Installation.html" target="_blank">here</a>. You May Need To Include It In Your SYSPATH If It Doesn't Recognize It During Runtime.
@@ -88,6 +89,10 @@ This Has Worked Really Well But Still Seems To Have Some Flaws With Formatting S
   ```
   sudo apt install tesseract-ocr
   ```
+
+
+  You Also May Need To Install Java For Tabula As This Codebase Relies On It.
+  
 
 #### **- Local LLM Support**
 This Branch Introduces Support For Two Local Large Language Models (LLMs) Via Ollama, Allowing For High-Performance, On-Device AI Processing Without The Need For Cloud-Based Services. The Two Integrated Models Are:
