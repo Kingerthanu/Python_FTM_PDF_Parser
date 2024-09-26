@@ -39,6 +39,8 @@ openai.api_key = "______"
 # Specify The Directory Path Of Your PDFs
 directory_path = r"______"
 
+# Specify The Focus Context To Utilize The Training Data In
+focus_context = "Real-Time Performance in RISC-V"
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~END Config~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -234,36 +236,7 @@ def chunk_text(text : str, chunk_size=2000):
   # Yield Chunks Of Words Up To The Specified Chunk Size
   for i in range(0, len(words), chunk_size):
     yield ' '.join(words[i:i + chunk_size])
-
-
-'''
-
-  Desc: This Function Uses Tesseract Optical Character Recognition (OCR) To Extract Text From A Provided Image.
-  This Means It Will Extract Embedded Text In Images As Text Like That Is Purely A Image And Needs To Be Pattern 
-  Recognized.
-  
-  Preconditions:
-    1.) image Must Be A Valid PIL Image Object.
-  
-  Postconditions:
-    1.) Returns A String Containing The Text Extracted From The Image.
-    2.) Returns An Empty String If Tesseract OCR Encounters An Error.
-
-
-Deprecated, Doesn't Work Well. Will Transfer To LLaVa
-def extract_text_from_image(image: Image.Image) -> str:
-  """
-  Run OCR on the preprocessed image.
-  """
-  try:
-    # Run OCR on the preprocessed image using pytesseract
-    text = pytesseract.image_to_string(image, config='--psm 3')
-    return text
-  except Exception as e:
-    print(f"OCR Error: {e}")
-    return ""
-
-'''
+    
 
 '''
 
@@ -434,7 +407,7 @@ def send_to_openai_with_retry(text_chunk : str, previous_context : str = "", fil
 
 '''
 
-  Desc: Sends A Text Chunk And Context To OpenAI GPT-4o-mini For Processing And Fine-Tuning Data Generation.
+  Desc: Sends A Text Chunk And Context To OpenAI GPT-4o-mini For Processing And Fine-Tuning Data Generation In Which Focuses On Technically-Worded, Theoretical Solutions. Will Be Utilized For Mult-Domain Contexual Chaining Later With send_to_openai_code(...).
   
   Preconditions:
     1.) text_chunk Contains The Text To Be Sent To The OpenAI API As Fine-Tuning Data.
@@ -448,21 +421,16 @@ def send_to_openai_with_retry(text_chunk : str, previous_context : str = "", fil
 '''
 def send_to_openai(text_chunk, previous_context="", file_path="", page_num=""):
   try:
+    # Streamlined Prompt For Generating Fine-tuned Technical Analysis
     prompt = f"""
-    Using the provided TEXT CONTENT from page {page_num} of {file_path} and PRIOR CONTEXT, generate **fine-tuning data** that breaks down the integration of hardware and software for the Arduino Mega 2560 Rev3 Board.
+    Using the primary source documentation in TEXT CONTENT from page {page_num} of {file_path}, and the previous two pages in PRIOR CONTEXT, generate **extremely detailed and high-quality technical analysis** focused in the {focus_context} sphere of computer science. The response should integrate the information from the documentation, covering system behavior, lifecycle performance, and optimization techniques. Ensure you fully utilize both **quantitative data** (e.g., performance metrics, memory sizes, power consumption, clock speeds) and **qualitative insights** (e.g., configuration details, architectural design choices) ().
 
-    Specifically focus on the following areas, but feel free to expand beyond these as necessary:
-
-    - Pinmap diagrams and how each pin interacts with peripherals such as GPIO, PWM, ADC, and communication protocols (I2C, SPI, UART). Explain in great detail which pins should be used for different components and why.
-    - Exact physical locations and pinouts on the board, specifying how to wire components such as sensors, motors, and communication modules to specific pins.
-    - Simulating real-world hardware setups: Provide step-by-step guidance on how users can simulate the Arduino Mega 2560 Rev3 Board using software tools, including mock hardware interfaces.
-    - Theoretical aspects of hardware pin functionalities: Provide voltage/current limits, signal protocols, and other hardware constraints.
-    - Practical software integration: Provide detailed programming instructions (including libraries, best practices, and detailed code examples) for interfacing with hardware components.
-    - Full lifecycle simulation: From low-level hardware configuration (pin mapping, timers, interrupts) to high-level abstractions, including how to create software simulations that reflect real-world hardware performance.
-    - Real-world implementation challenges: Provide step-by-step solutions for connecting sensors, controlling motors, managing power efficiently, etc., and how to simulate such setups in a virtual environment.
-    - Detail how pin-specific operations can be simulated, including communication protocols like I2C, SPI, UART, and how real-time system constraints (such as interrupts and timers) are handled both physically and in simulation.
-
-    **Important**: The list above is not exhaustive, and your responses should adapt based on the technical problems presented in TEXT CONTENT and PRIOR CONTEXT. Your answers must be **extremely detailed** and cover both hardware and software implementation in a simulatory environment.
+    Ensure the response thoroughly addresses the following:
+    1. **Core Concepts**: Provide a comprehensive explanation of core concepts such as task scheduling, memory management, and hardware-software integration. Incorporate **specific numbers** and **qualitative insights** from the documentation (e.g., performance benchmarks, system constraints) to show how these concepts interrelate and impact performance.
+    2. **System-Level Integration**: Explain in detail how system components (e.g., processors, memory, I/O interfaces) interact in an embedded system and the impact of configurations (e.g., sensors, communication buses) on system performance. Use both **quantitative data** (e.g., power consumption, clock speeds, memory sizes) and **qualitative descriptions** to support the analysis.
+    3. **Optimization Strategies**: Analyze specific optimization techniques, such as task scheduling (e.g., round-robin vs. priority-based), memory management (e.g., stack vs. heap allocation), and hardware optimizations (e.g., cache utilization). Include detailed performance trade-offs and reference relevant benchmarks or statistics from the documentation.
+    4. **Real-World Application**: Provide a **detailed example** of a real-world application incorporating both **quantitative data (e.g., performance metrics, power usage, benchmarks)** and **qualitative insights** from the documentation. Discuss practical cases such as power efficiency, task parallelism, or latency reduction, and explain the significance of these metrics for real-time system optimization.
+    5. **Environmental Applicability**: Provide detailed explanations of the environments in which this technology is able to be deployed in (e.g. this sensor is not waterproof so don't use in hydroengineering)
 
     TEXT CONTENT:
     <info>{text_chunk}</info>
@@ -470,41 +438,52 @@ def send_to_openai(text_chunk, previous_context="", file_path="", page_num=""):
     PRIOR CONTEXT:
     <info>{previous_context}</info>
 
-    Ensure that each response provides detailed, actionable insights for both physical hardware setups and simulations, including diagrams, wiring instructions, theoretical breakdowns, and step-by-step code examples where applicable. Each response must generate at least **50 distinct, thorough questions and answers per response** to comprehensively address all aspects of the board's hardware and software integration lifecycle, ensuring no repeat questions are given.
+    Format the response as a conversation, ensuring a strong technical question and answer derived from the TEXT CONTENT and PRIOR CONTEXT for each topic. Focus on producing detailed responses. Each response should include **extensive technical insights**, connecting back to the provided documentation, utilizing both **quantitative data** (e.g., performance metrics) and **qualitative descriptions** (e.g., system design).
 
-    The format should include a detailed conversation of technical challenges and solutions (ensure at least 50 strong examples derived from TEXT CONTENT AND PRIOR CONTENT are given as "messages" strictly following this format!):
+    ENSURE ALL DATA PROVIDED IN TEXT CONTENT and PRIOR CONTEXT IS UTILIZED IN THE RESPONSES; FORMAT YOUR RESPONSE STRICTLY IN THIS MANNER (ENSURE QUALITY OVER QUANTITY; TRY MAKING AS MANY QUALITY "messages" AS POSSIBLE):
 
     {{
-        "messages": [
-          {{"role": "system", "content": "You are an expert in low-level hardware-software integration for Arduino Mega 2560 Rev3 Board, specializing in simulatory environments, embedded systems, detailed hardware pin mapping, and software integration from low-level configuration to high-level abstractions."}},
-          {{"role": "user", "content": "(A highly specific technical question about the Arduino 2560 Rev3 Board board that pertains to the documentation as described in the provided TEXT CONTENT)"}},
-          {{"role": "assistant", "content": "(A detailed response including technical explanations, practical examples, wiring diagrams, code snippets, and simulation details. Provide insight on both hardware and software implementation.)"}}
-        ]
+      "messages": [
+        {{"role": "system", "content": "You are an expert in {focus_context}, specializing in real-time optimizations, embedded systems, and performance tuning. Your task is to provide **extremely detailed** technical insights, focusing on solving complex problems based on the provided documentation. Prioritize depth and interconnect concepts from the provided documentation, and fully utilize both numbers (performance metrics, clock speeds, memory sizes, etc.) and qualitative descriptions."}},
+        {{"role": "user", "content": "(A specific technical question or problem based on the documentation in TEXT CONTENT and PRIOR CONTEXT)"}} ,
+        {{"content": "(A detailed, problem-solving response providing a technical analysis incorporating **quantitative data** and **qualitative insights**. The solution should be extensively explained, referencing both data points and descriptive information from the PDF. Offer alternative approaches where applicable and explain trade-offs using **quantitative benchmarks** and **qualitative insights**.)"}}
+      ]
     }}
     {{
-        "messages": [
-          {{"role": "system", "content": "You are an expert in low-level hardware-software integration for Arduino Mega 2560 Rev3 Board, specializing in simulatory environments, embedded systems, detailed hardware pin mapping, and software integration from low-level configuration to high-level abstractions."}},
-          {{"role": "user", "content": "(A highly specific technical question about the Arduino 2560 Rev3 Board board that pertains to the documentation as described in the provided TEXT CONTENT)"}},
-          {{"role": "assistant", "content": "(A detailed response including technical explanations, practical examples, wiring diagrams, code snippets, and simulation details. Provide insight on both hardware and software implementation.)"}}]
+      "messages": [
+        {{"role": "system", "content": "You are an expert in {focus_context}, specializing in real-time optimizations, embedded systems, and performance tuning. Your task is to provide **extremely detailed** technical insights, focusing on solving complex problems based on the provided documentation. Prioritize depth and interconnect concepts from the provided documentation, and fully utilize both numbers (performance metrics, clock speeds, memory sizes, etc.) and qualitative descriptions."}},
+        {{"role": "user", "content": "(A specific technical question or problem based on the documentation in TEXT CONTENT and PRIOR CONTEXT)"}} ,
+        {{"content": "(A detailed, problem-solving response providing a technical analysis incorporating **quantitative data** and **qualitative insights**. The solution should be extensively explained, referencing both data points and descriptive information from the PDF. Offer alternative approaches where applicable and explain trade-offs using **quantitative benchmarks** and **qualitative insights**.)"}}
+      ]
     }}
     """
 
+    # System-level Prompt For Defining Model Behavior In Technical Analysis
+    system_prompt = f"""
+    You are an expert computer science with a current consultant focus in {focus_context}, specializing in embedded systems and low-lowel design/development. You provide **extremely detailed** technical insights, drawing extensively from the provided documentation, focusing on solving complex problems in areas such as task scheduling, memory management, and hardware-software integration. You must integrate both **quantitative data** (e.g., performance metrics, power consumption, memory sizes) and **qualitative descriptions** (e.g., architectural design, configuration details) from the documentation in every response.
+
+    Your responses should cover all aspects of {focus_context}, including foundational theory, system integration, real-world application, and optimization strategies. Ensure that your answers reflect the information provided in the PDF, cross-referencing benchmarks, power consumption figures, and technical insights wherever possible.
+    """
+
+    # Call OpenAI API with the adjusted prompt
     response = openai.chat.completions.create(
       model="gpt-4o-mini-2024-07-18",
       messages=[
-        {"role": "system", "content": (
-            "You are an expert in simulatory hardware-software integration for Arduino Mega 2560 Rev3 Board, "
-            "specializing in physical setups, simulations, low-level design, and real-time systems. You provide deeply detailed answers across all phases, from pin-level configuration to system-wide simulation and optimization."
-        )},
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": prompt}
       ],
-      max_tokens=3000,
-      temperature=0.5,
-      top_p=0.9
+      max_tokens=4500,  # Adjust For Detailed Outputs
+      temperature=0.25,  # Keep The Temperature Low To Maintain Deterministic, Detailed Responses
+      top_p=0.75,  # Ensures Focused And Technical Answers
+      presence_penalty=0.1,  # Encourage New Concept Introductions
+      frequency_penalty=0.1  # Reduces Redundancy In The Answers
     )
+
+    # Return The Detailed Response From OpenAI
     return response.choices[0].message.content
   except Exception as e:
-      return None  # Return None If API Call Fails
+    print(f"Error generating fine-tuned data: {e}")
+    return None
 
 
 '''
